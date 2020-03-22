@@ -146,14 +146,14 @@ C:\Windows\System32\wevtutil.exe im "C:\Program Files\CustomSecurityProvider\Cus
 C:\Windows\System32\wevtutil.exe sl "CustomSec/Security" /ca:O:BAG:SYD:"(A;;0xf0007;;;SY)(A;;0x7;;;BA)(A;;0x1;;;BO)(A;;0x1;;;SO)(A;;0x1;;;S-1-5-32-573)"
 ```
 
+This will create a custom event log located in CustomSec/Security
+<p><img src="eventprovider.png" alt="Image description"></p>
+
 ## Uninstalling Custom Event Provider
 
 ```console
 C:\Windows\System32\wevtutil.exe um "C:\Program Files\CustomSecurityProvider\CustomSec.man"
 ```
-
-This will create a custom event log located in CustomSec/Security
-<p><img src="eventprovider.png" alt="Image description"></p>
 
 ***
 
