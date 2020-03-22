@@ -152,8 +152,6 @@ C:\Windows\System32\wevtutil.exe sl "CustomSec/Security" /ca:O:BAG:SYD:"(A;;0xf0
 C:\Windows\System32\wevtutil.exe um "C:\Program Files\CustomSecurityProvider\CustomSec.man"
 ```
 
-## Information
-
 This will create a custom event log located in CustomSec/Security
 <p><img src="eventprovider.png" alt="Image description"></p>
 
