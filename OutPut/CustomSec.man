@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<instrumentationManifest xsi:schemaLocation="http://schemas.microsoft.com/win/2004/08/events eventman.xsd" 
+    xmlns="http://schemas.microsoft.com/win/2004/08/events" 
+    xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+    xmlns:trace="http://schemas.microsoft.com/win/2004/08/events/trace">
+    <instrumentation>
+        <events>
+            <provider name="CustomSec" symbol="CustomSec" guid="{f83dcb4e-48a2-43d4-a7d6-3b6b1938a828}" resourceFileName="C:\Program Files\CustomSecurityProvider\CustomSec.dll" messageFileName="C:\Program Files\CustomSecurityProvider\CustomSec.dll">
+                <events>
+                    <event symbol="modules" value="50" version="1" channel="CustomSec/Security" level="win:Informational" task="Task-MODULES" template="modules" message="$(string.Custom CustomSec Events.event.50.message)" /> <event symbol="pipelist" value="20" version="1" channel="CustomSec/Security" level="win:Informational" task="Task-PIPELIST" template="pipelist" message="$(string.Custom CustomSec Events.event.20.message)" /> <event symbol="streams" value="40" version="1" channel="CustomSec/Security" level="win:Informational" task="Task-STREAMS" template="streams" message="$(string.Custom CustomSec Events.event.40.message)" /> <event symbol="autoruns" value="10" version="1" channel="CustomSec/Security" level="win:Informational" task="Task-AUTORUNS" template="autoruns" message="$(string.Custom CustomSec Events.event.10.message)" /> <event symbol="certstore" value="30" version="1" channel="CustomSec/Security" level="win:Informational" task="Task-CERTSTORE" template="certstore" message="$(string.Custom CustomSec Events.event.30.message)" /> 
+                </events>
+                <levels/>
+				<tasks>
+					<task name="Task-MODULES" symbol="TASK_MODULES" value="50" message="$(string.task.MODULES)" eventGUID="{1963818c-34d3-48be-a449-a04ce90ed515}" /> <task name="Task-PIPELIST" symbol="TASK_PIPELIST" value="20" message="$(string.task.PIPELIST)" eventGUID="{37369f47-5b7d-49f3-a398-fdd5e685868f}" /> <task name="Task-STREAMS" symbol="TASK_STREAMS" value="40" message="$(string.task.STREAMS)" eventGUID="{869ad177-bc0b-4ebb-b756-29c4ac7d0ade}" /> <task name="Task-AUTORUNS" symbol="TASK_AUTORUNS" value="10" message="$(string.task.AUTORUNS)" eventGUID="{2ac9de17-5bea-4b39-a077-e92c07666c04}" /> <task name="Task-CERTSTORE" symbol="TASK_CERTSTORE" value="30" message="$(string.task.CERTSTORE)" eventGUID="{dd68fad6-e63a-4297-baeb-23efa9aa9f70}" />  
+				</tasks>
+                <opcodes/>
+				<channels>
+				<channel chid="c1"
+					name="CustomSec/Security"
+					type="Operational"
+					symbol="CustomSec"					
+					enabled="true"
+					/>                    
+                </channels>
+                <templates>			
+                    <template tid="modules">
+			<data name="FileName" inType="win:UnicodeString" outType="xs:string"/>
+<data name="UserName" inType="win:UnicodeString" outType="xs:string"/>
+<data name="PID" inType="win:UnicodeString" outType="xs:string"/>
+<data name="SHA256" inType="win:UnicodeString" outType="xs:string"/>
+<data name="BaseAddress" inType="win:UnicodeString" outType="xs:string"/>
+<data name="EntryPointAddress" inType="win:UnicodeString" outType="xs:string"/>
+		</template> <template tid="pipelist">
+			<data name="PipeName" inType="win:UnicodeString" outType="xs:string"/>
+<data name="Instances" inType="win:UnicodeString" outType="xs:string"/>
+<data name="MaxInstances" inType="win:UnicodeString" outType="xs:string"/>
+		</template> <template tid="streams">
+			<data name="FileName" inType="win:UnicodeString" outType="xs:string"/>
+<data name="LastWriteTime" inType="win:UnicodeString" outType="xs:string"/>
+<data name="Stream" inType="win:UnicodeString" outType="xs:string"/>
+		</template> <template tid="autoruns">
+			<data name="Time" inType="win:UnicodeString" outType="xs:string"/>
+<data name="Entry_Location" inType="win:UnicodeString" outType="xs:string"/>
+<data name="Entry" inType="win:UnicodeString" outType="xs:string"/>
+<data name="Description" inType="win:UnicodeString" outType="xs:string"/>
+<data name="Image_Path" inType="win:UnicodeString" outType="xs:string"/>
+<data name="Version" inType="win:UnicodeString" outType="xs:string"/>
+<data name="Launch_String" inType="win:UnicodeString" outType="xs:string"/>
+<data name="sha256" inType="win:UnicodeString" outType="xs:string"/>
+		</template> <template tid="certstore">
+			<data name="Store" inType="win:UnicodeString" outType="xs:string"/>
+<data name="Subject" inType="win:UnicodeString" outType="xs:string"/>
+<data name="Issuer" inType="win:UnicodeString" outType="xs:string"/>
+<data name="SerialNumber" inType="win:UnicodeString" outType="xs:string"/>
+<data name="Thumbprint" inType="win:UnicodeString" outType="xs:string"/>
+<data name="Algorithm" inType="win:UnicodeString" outType="xs:string"/>
+<data name="NotBefore" inType="win:UnicodeString" outType="xs:string"/>
+<data name="NotAfter" inType="win:UnicodeString" outType="xs:string"/>
+		</template>
+                </templates>
+            </provider>
+        </events>
+    </instrumentation>
+    <localization>
+        <resources culture="en-US">
+            <stringTable>
+				<string id="level.Informational" value="Information"></string>
+                <string id="channel.System" value="System"></string>
+				<string id="Publisher.EventMessage" value="%1;%n&#xA;%2;%n"></string>		
+					<string id="Custom CustomSec Events.event.50.message" value="FileName: %1!s!%nUserName: %2!s!%nPID: %3!s!%nSHA256: %4!s!%nBaseAddress: %5!s!%nEntryPointAddress: %6!s!%n"></string> <string id="task.MODULES" value="Loaded DLLs" /> <string id="Custom CustomSec Events.event.20.message" value="PipeName: %1!s!%nInstances: %2!s!%nMaxInstances: %3!s!%n"></string> <string id="task.PIPELIST" value="PIPELIST" /> <string id="Custom CustomSec Events.event.40.message" value="FileName: %1!s!%nLastWriteTime: %2!s!%nStream: %3!s!%n"></string> <string id="task.STREAMS" value="STREAMS" /> <string id="Custom CustomSec Events.event.10.message" value="Time: %1!s!%nEntry_Location: %2!s!%nEntry: %3!s!%nDescription: %4!s!%nImage_Path: %5!s!%nVersion: %6!s!%nLaunch_String: %7!s!%nsha256: %8!s!%n"></string> <string id="task.AUTORUNS" value="AUTORUNS" /> <string id="Custom CustomSec Events.event.30.message" value="Store: %1!s!%nSubject: %2!s!%nIssuer: %3!s!%nSerialNumber: %4!s!%nThumbprint: %5!s!%nAlgorithm: %6!s!%nNotBefore: %7!s!%nNotAfter: %8!s!%n"></string> <string id="task.CERTSTORE" value="CERTSTORE" />
+            </stringTable>
+        </resources>
+    </localization>
+</instrumentationManifest> 
