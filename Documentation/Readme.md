@@ -143,7 +143,7 @@ Remove Provider and folder
 
 ```console
 C:\Windows\System32\wevtutil.exe im "C:\Program Files\CustomSecurityProvider\CustomSec.man"
-C:\Windows\System32\wevtutil.exe sl "Custom/Security" /ca:O:BAG:SYD:"(A;;0xf0007;;;SY)(A;;0x7;;;BA)(A;;0x1;;;BO)(A;;0x1;;;SO)(A;;0x1;;;S-1-5-32-573)"
+C:\Windows\System32\wevtutil.exe sl "CustomSec/Security" /ca:O:BAG:SYD:"(A;;0xf0007;;;SY)(A;;0x7;;;BA)(A;;0x1;;;BO)(A;;0x1;;;SO)(A;;0x1;;;S-1-5-32-573)"
 ```
 
 ## Uninstalling Custom Event Provider
@@ -176,6 +176,6 @@ Logging must be done using the exact attributes created in the provider in the c
 
 ```powershell
 $Pipelist = (& $pipelistpath -accepteula -nobanner) | Select-Object -Skip 2 | ForEach-Object { $_ -replace "\s\s+", ";" } | ConvertFrom-Csv -Delimiter ';' -Header "PipeName", "Instances", "MaxInstances"  
-$ProviderName = "Custom"
+$ProviderName = "CustomSec"
 Write-CustomLog -ProviderName $ProviderName -Objects $Pipelist -ID 20
 ```
