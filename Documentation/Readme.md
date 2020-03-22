@@ -154,7 +154,7 @@ C:\Windows\System32\wevtutil.exe um "C:\Program Files\CustomSecurityProvider\Cus
 
 ## Information
 
-This will create a custom event log located in Custom/Security
+This will create a custom event log located in CustomSec/Security
 <p><img src="eventprovider.png" alt="Image description"></p>
 
 ***
