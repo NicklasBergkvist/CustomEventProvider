@@ -468,15 +468,15 @@ Removes the provider and deletes the dll and manifest as well as the folder</p>
 <h2 id="manually-using-wevtutilexe">Manually using Wevtutil.exe</h2>
 <ul>
 <li>Create dll and manifest file or use the provided files</li>
-<li>Copy them to the correct path according to the manifest file (If using the provided, the path should be &quot;C:\Program Files\CustomSecurityProvider\Custom.dll&quot;)</li>
+<li>Copy them to the correct path according to the manifest file (If using the provided, the path should be &quot;C:\Program Files\CustomSecurityProvider\CustomSec.dll&quot;)</li>
 <li>Install the provider using C:\Windows\System32\wevtutil.exe</li>
 <li>Modify log permissions</li>
 </ul>
-<pre class="hljs"><code><div>C:\Windows\System32\wevtutil.exe im "C:\Program Files\CustomSecurityProvider\Custom.man"
+<pre class="hljs"><code><div>C:\Windows\System32\wevtutil.exe im "C:\Program Files\CustomSecurityProvider\CustomSec.man"
 C:\Windows\System32\wevtutil.exe sl "Custom/Security" /ca:O:BAG:SYD:"(A;;0xf0007;;;SY)(A;;0x7;;;BA)(A;;0x1;;;BO)(A;;0x1;;;SO)(A;;0x1;;;S-1-5-32-573)"
 </div></code></pre>
 <h2 id="uninstalling-custom-event-provider">Uninstalling Custom Event Provider</h2>
-<pre class="hljs"><code><div>C:\Windows\System32\wevtutil.exe um "C:\Program Files\CustomSecurityProvider\Custom.man"
+<pre class="hljs"><code><div>C:\Windows\System32\wevtutil.exe um "C:\Program Files\CustomSecurityProvider\CustomSec.man"
 </div></code></pre>
 <h2 id="information">Information</h2>
 <p>This will create a custom event log located in Custom/Security</p>

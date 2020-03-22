@@ -137,19 +137,19 @@ Remove Provider and folder
 ## Manually using Wevtutil.exe
 
 * Create dll and manifest file or use the provided files
-* Copy them to the correct path according to the manifest file (If using the provided, the path should be "C:\Program Files\CustomSecurityProvider\Custom.dll")
+* Copy them to the correct path according to the manifest file (If using the provided, the path should be "C:\Program Files\CustomSecurityProvider\CustomSec.dll")
 * Install the provider using C:\Windows\System32\wevtutil.exe
 * Modify log permissions
 
 ```console
-C:\Windows\System32\wevtutil.exe im "C:\Program Files\CustomSecurityProvider\Custom.man"
+C:\Windows\System32\wevtutil.exe im "C:\Program Files\CustomSecurityProvider\CustomSec.man"
 C:\Windows\System32\wevtutil.exe sl "Custom/Security" /ca:O:BAG:SYD:"(A;;0xf0007;;;SY)(A;;0x7;;;BA)(A;;0x1;;;BO)(A;;0x1;;;SO)(A;;0x1;;;S-1-5-32-573)"
 ```
 
 ## Uninstalling Custom Event Provider
 
 ```console
-C:\Windows\System32\wevtutil.exe um "C:\Program Files\CustomSecurityProvider\Custom.man"
+C:\Windows\System32\wevtutil.exe um "C:\Program Files\CustomSecurityProvider\CustomSec.man"
 ```
 
 ## Information
