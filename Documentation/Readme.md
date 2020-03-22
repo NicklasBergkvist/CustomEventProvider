@@ -4,10 +4,10 @@
 
 This project consists of two parts.
 
-* Custom Event Provider  
+* **Custom Event Provider**  
     -CreateProvider.ps1 creates an event manifest and dll and uses C:\Windows\System32\wevtutil.exe to install the provider  
 
-* Collection Script  
+* **Collection Script**  
     -SecInfo.ps1 collects information using powershell, autoruns and pipelist from sysinternals and logs the result to the custom event log previously created
 
 <br>
