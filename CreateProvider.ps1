@@ -33,37 +33,49 @@ Function New-EventManifest
 	# Max number of attributes per eventid are 8
 	$Sources = @{	
 		Autoruns  = @{
-			Attributes = 'Time', 'Entry_Location', 'Entry', 'Description', 'Image_Path', 'Version', 'Launch_String', 'sha256'
+			Attributes = 'Time', 'Entry_Location', 'Entry', 'Description', 'Image_Path', 'Version', 'Launch_String', 'hash.sha256'
 			EventID    = '10'
-			TaskInfo   = 'AUTORUNS'
+			TaskInfo   = 'autoruns'
 			Name       = 'autoruns'
 		}
 		Pipelist  = @{
 			Attributes = 'PipeName', 'Instances', 'MaxInstances'
 			EventID    = '20'
-			TaskInfo   = 'PIPELIST'
+			TaskInfo   = 'pipelist'
 			Name       = 'pipelist'
 		}
 		Certstore = @{
 			Attributes = 'Store', 'Subject', 'Issuer', 'SerialNumber', 'Thumbprint', 'Algorithm', 'NotBefore', 'NotAfter'
 			EventID    = '30'
-			TaskInfo   = 'CERTSTORE'
+			TaskInfo   = 'certstore'
 			Name       = 'certstore'
 		}
 		Streams   = @{
 			Attributes = 'FileName', 'LastWriteTime', 'Stream'
 			EventID    = '40'
-			TaskInfo   = 'STREAMS'
+			TaskInfo   = 'streams'
 			Name       = 'streams'
 		}
 		Modules   = @{
-			Attributes = 'FileName', 'UserName', 'PID', 'SHA256', 'BaseAddress', 'EntryPointAddress'
+			Attributes = 'FileName', 'UserName', 'process.pid', 'hash.sha256', 'BaseAddress', 'EntryPointAddress'
 			EventID    = '50'
-			TaskInfo   = 'Loaded DLLs'
+			TaskInfo   = 'modules'
 			Name       = 'modules'
 		}
+		Prefetch  = @{
+			Attributes = 'date:SourceCreated', 'date:SourceModified', 'date:SourceAccessed', 'ExecutableName', 'Hash', 'float:Size', 'Version', 'float:RunCount', 'date:LastRun', 'FilesLoaded'
+			EventID    = '60'
+			TaskInfo   = 'prefetch'
+			Name       = 'prefetch'
+		}
+		Chrome    = @{
+			Attributes = 'url', 'float:url_id', 'title', 'float:visit_count', 'float:typed_count', 'float:from_visit', 'float:transition', 'visit_duration', 'visit_source', 'transition_friendly', 'date:datetime', 'timestamp_desc', 'data_type', 'message'
+			EventID    = '70'
+			TaskInfo   = 'chrome'
+			Name       = 'chrome'
+		}
 	}
-
+	
 
 	# Variables
 
@@ -76,12 +88,48 @@ Function New-EventManifest
 
 
 	# XML Manifest Creation
+	
+	# win:UInt32
+	# win:GUID 
+	# win:SYSTEMTIME 	A SYSTEMTIME structure, 16-bytes. 	xs:dateTime (get-date).ToString("yyyy-MM-ddTHH:mm:ssfffffffZ")
+	# 'inType="win:UnicodeString" outType="xs:string"'
+	# 'inType="win:Float" outType="win:float"'
+	# 'inType="win:GUID" outType="xs:GUID"'
+	# 'inType="win:FILETIME" outType="win:dateTime"'
+	# 'inType="win:Boolean" outType="win:boolean"' Note! Use 1 or 0
 
-	$Templates = $Sources.GetEnumerator().foreach( {
-			$eventdata = $($Sources.($_.name).Attributes).foreach( { ('<data name="{0}" inType="win:UnicodeString" outType="xs:string"/>' -f $_) }) -join [System.Environment]::NewLine
+	
+
+	$Templates = $Sources.GetEnumerator().foreach( {			
+			$eventdata = $($Sources.($_.name).Attributes).foreach( {
+					if ($_ -match "^float")
+					{
+						$datatype = 'inType="win:Float" outType="win:float"'						
+					}
+					elseif ($_ -match "^int")
+					{
+						$datatype = 'inType="win:Int32" outType="win:HResult"'						
+					} 
+					elseif ($_ -match "^date")
+					{
+						$datatype = 'inType="win:FILETIME" outType="win:dateTime"'						
+					}
+					elseif ($_ -match "^bool")
+					{
+						$datatype = 'inType="win:Boolean" outType="win:boolean"'					
+					}
+					elseif ($_ -match "^guid")
+					{
+						$datatype = 'inType="win:GUID" outType="xs:GUID"'					
+					}
+					else
+					{
+						$datatype = 'inType="win:UnicodeString" outType="xs:string"'					
+					}
+					('<data name="{0}" {1} />' -f ($_ -replace "^.+:"), $datatype) }) -join [System.Environment]::NewLine
 			'<template tid="{0}">
 			{1}
-		</template>' -F $Sources.($_.name).Name, $eventdata		
+		</template>' -F ($Sources.($_.name).Name -replace "^.+:"), $eventdata		
 		})
 
 
@@ -100,7 +148,7 @@ Function New-EventManifest
 			$Value = $(
 				foreach ($Val in $attributes)
 				{
-					$Val + ': %{0}!s!%n' -f $n
+					($Val -replace "^.+:") + ': %{0}!s!%n' -f $n
 					$n++				
 				}
 			)	
@@ -294,9 +342,9 @@ Function Remove-CustomEventProvider
 
 $Logname = "CustomSec/Security"
 $DestinationPath = 'C:\Program Files\CustomSecurityProvider'
-$ManifestFilePath = (Get-ChildItem -path ((Split-Path $script:MyInvocation.MyCommand.Path) + '\output\*.man')).FullName
+$ManifestFilePath = (Get-ChildItem -Path ((Split-Path $script:MyInvocation.MyCommand.Path) + '\output\*.man')).FullName
 $SDKPath = ((Split-Path $script:MyInvocation.MyCommand.Path) + '\SDK')
-$CSCPath = 'C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe'
+$CSCPath = '{0}\csc.exe' -f $SDKPath
 
 switch ($Action)
 {
