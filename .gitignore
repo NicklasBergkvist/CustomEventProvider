@@ -1,1 +1,3 @@
-reports\*
+/reports
+/reports/amcache.csv
+/reports/Hindsight_output.jsonl
