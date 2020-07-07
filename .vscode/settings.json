@@ -1,0 +1,18 @@
+{
+	"editor.formatOnType": true,
+	"editor.formatOnSave": true,
+	"editor.formatOnPaste": true,
+	"powershell.codeFormatting.openBraceOnSameLine": false,
+	"powershell.codeFormatting.ignoreOneLineBlock": false,
+	"powershell.codeFormatting.alignPropertyValuePairs": true,
+	"powershell.codeFormatting.preset": "Allman",
+	"powershell.codeFormatting.whitespaceAroundPipe": true,
+	"powershell.codeFormatting.useCorrectCasing": true,
+	"powershell.codeFormatting.autoCorrectAliases": true,
+	"powershell.codeFormatting.whitespaceAroundOperator": true,
+	"editor.renderLineHighlight": "none",
+	"editor.autoClosingBrackets": "always",
+	"editor.autoIndent": "full",
+	"editor.selectionHighlight": false,
+	"workbench.iconTheme": "material-icon-theme"
+}
